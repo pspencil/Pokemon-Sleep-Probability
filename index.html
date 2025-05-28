@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Sleep Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Pokemon Sleep Calculator</h1>
+    </header>
+
+    <main>
+        <section id="scoring-config">
+            <h2>Scoring Configuration</h2>
+            <div class="preset-controls">
+                <label for="preset-select">Load Preset:</label>
+                <select id="preset-select">
+                </select>
+                <button id="load-preset-btn">Load</button>
+                <button id="save-current-preset-btn">Save Current</button>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-button active" data-tab="ingredient-scores">Ingredients</button>
+                <button class="tab-button" data-tab="skill-scores">Skills</button>
+                <button class="tab-button" data-tab="nature-scores">Natures</button>
+                <button class="tab-button" data-tab="conditional-scoring">Conditional Skills</button>
+            </div>
+
+            <div id="ingredient-scores" class="tab-content active">
+                <h3>Ingredient Scores</h3>
+                <div id="ingredient-score-inputs" class="score-grid">
+                </div>
+            </div>
+
+            <div id="skill-scores" class="tab-content">
+                <h3>Skill Scores (First 3 Slots for Base Score)</h3>
+                <div id="skill-score-inputs" class="score-grid">
+                </div>
+            </div>
+
+            <div id="nature-scores" class="tab-content">
+                <h3>Nature Boost Scores</h3>
+                <div id="nature-boost-score-inputs" class="score-grid">
+                </div>
+                <h3>Nature Reduction Scores</h3>
+                <div id="nature-reduction-score-inputs" class="score-grid">
+                </div>
+            </div>
+
+            <div id="conditional-scoring" class="tab-content">
+                <h3>Conditional Skill Scoring</h3>
+                <button id="add-conditional-rule-btn">Add Conditional Rule</button>
+                <div id="conditional-rules-container">
+                </div>
+            </div>
+        </section>
+
+        <section id="calculator">
+            <h2>Probability Calculator</h2>
+            <div class="calculator-inputs">
+                <div class="input-group">
+                    <label for="prob-p-input">Probability (P) %:</label>
+                    <input type="number" id="prob-p-input" min="0" max="100" step="0.1" value="50">
+                    <input type="radio" name="compute-var" value="P" checked> Compute P
+                </div>
+                <div class="input-group">
+                    <label for="encounters-x-input">Encounters (X):</label>
+                    <input type="number" id="encounters-x-input" min="1" value="10">
+                    <input type="radio" name="compute-var" value="X"> Compute X
+                </div>
+                <div class="input-group">
+                    <label for="min-score-c-input">Min Score (C):</label>
+                    <input type="number" id="min-score-c-input" min="0" value="100">
+                    <input type="radio" name="compute-var" value="C"> Compute C
+                </div>
+            </div>
+            <button id="calculate-btn">Calculate</button>
+            <div class="calculation-result">
+                <h3>Result:</h3>
+                <p id="result-text"></p>
+            </div>
+        </section>
+
+        <section id="graphing">
+            <h2>Graphing Tool</h2>
+            <div class="graphing-controls">
+                <div class="input-group">
+                    <label for="fixed-graph-var">Fix Variable:</label>
+                    <select id="fixed-graph-var">
+                        <option value="P">Probability (P)</option>
+                        <option value="X">Encounters (X)</option>
+                        <option value="C">Min Score (C)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="x-axis-var">X-Axis:</label>
+                    <select id="x-axis-var">
+                        <option value="X">Encounters (X)</option>
+                        <option value="C">Min Score (C)</option>
+                    </select>
+                </div>
+                <button id="generate-graph-btn">Generate Graph</button>
+            </div>
+            <div class="graph-container">
+                <canvas id="myChart"></canvas>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Pokemon Sleep Calculator</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
