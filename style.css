@@ -63,15 +63,19 @@ h3 {
     color: var(--secondary-color);
 }
 
+.input-group {
+    display: grid;
+}
+
 .input-group,
 .score-grid {
     margin-bottom: 15px;
-    display: grid;
     gap: 10px;
 }
 
 .score-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    display: block;
+    grid-template-columns: unset;
 }
 
 .input-group label {
@@ -247,4 +251,107 @@ footer {
     font-weight: bold;
     color: var(--primary-color);
     /* Highlight selected label */
+}
+
+/* Skills section styling */
+
+
+.skills-rarity-section {
+    margin-bottom: 25px;
+}
+
+.skills-rarity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.skill-input-container {
+    background: var(--input-bg);
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.skill-input-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.skill-input-container.gold {
+    border-left: 4px solid #FFD700;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.05));
+}
+
+.skill-input-container.blue {
+    border-left: 4px solid #4A90E2;
+    background: linear-gradient(135deg, rgba(74, 144, 226, 0.1), rgba(53, 122, 189, 0.05));
+}
+
+.skill-input-container.white {
+    border-left: 4px solid #CCCCCC;
+    background: linear-gradient(135deg, rgba(232, 232, 232, 0.1), rgba(204, 204, 204, 0.05));
+}
+
+.skill-input-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.skill-input-container.gold label {
+    color: #FFD700;
+}
+
+.skill-input-container.blue label {
+    color: #64B5F6;
+}
+
+.skill-input-container.white label {
+    color: #E0E0E0;
+}
+
+.skill-input-container input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: rgba(43, 43, 43, 0.8);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    transition: border-color 0.3s ease;
+}
+
+.skill-input-container input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* Skills within each rarity section arranged horizontally with wrapping */
+.skills-rarity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    /* Horizontal arrangement with wrapping */
+    gap: 12px;
+}
+
+/* Mobile responsiveness for skills */
+@media (max-width: 768px) {
+    .skills-rarity-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .skill-input-container {
+        padding: 10px;
+    }
+
+    .skills-rarity-header {
+        font-size: 1rem;
+        padding: 8px 12px;
+    }
 }

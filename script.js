@@ -2,13 +2,20 @@
 
 // --- 1. Data Structures ---
 const ingredients = [
-    { name: "AAA", probability: 1 / 9 },
-    { name: "AAB", probability: 1 / 9 },
-    { name: "AAC", probability: 1 / 9 },
-    { name: "ABA", probability: 2 / 9 },
-    { name: "ABB", probability: 2 / 9 },
-    { name: "ABC", probability: 2 / 9 },
+    { name: "AAA", probability: 1 / 9, rarity: "Gold" },
+    { name: "AAB", probability: 1 / 9, rarity: "Blue" },
+    { name: "AAC", probability: 1 / 9, rarity: "White" },
+    { name: "ABA", probability: 2 / 9, rarity: "White" },
+    { name: "ABB", probability: 2 / 9, rarity: "Blue" },
+    { name: "ABC", probability: 2 / 9, rarity: "White" },
 ];
+
+// Group ingredients by rarity
+const ingredientsByRarity = {
+    Gold: ingredients.filter(ing => ing.rarity === "Gold"),
+    Blue: ingredients.filter(ing => ing.rarity === "Blue"),
+    White: ingredients.filter(ing => ing.rarity === "White")
+};
 
 const skills = [
     { name: "Berry Finding S", rarity: "Gold", prob: 0.02 },
@@ -31,6 +38,13 @@ const skills = [
     { name: "Inventory Up S", rarity: "White", prob: 0.125 },
     { name: "Skill Trigger S", rarity: "White", prob: 0.125 },
 ];
+
+// Group skills by rarity
+const skillsByRarity = {
+    Gold: skills.filter(skill => skill.rarity === "Gold"),
+    Blue: skills.filter(skill => skill.rarity === "Blue"),
+    White: skills.filter(skill => skill.rarity === "White")
+};
 
 const natures = [
     { name: "Lonely", boost: "Speed of Help +10%", reduction: "Energy Recovery -12%" },
@@ -220,24 +234,63 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function populateScoringInputs() {
+    // TODO: deduplicate this structure. 
     const ingredientInputsDiv = document.getElementById('ingredient-score-inputs');
-    ingredients.forEach(ing => {
-        ingredientInputsDiv.innerHTML += `
-            <div>
-                <label for="score-ing-${ing.name}">${ing.name}:</label>
-                <input type="number" id="score-ing-${ing.name}" data-prop-type="ingredient" data-prop-name="${ing.name}" value="${scoringConfig.ingredientScores[ing.name]}">
-            </div>
+    Object.entries(ingredientsByRarity).forEach(([rarity, ingredientList]) => {
+        if (ingredientList.length === 0) return;
+
+        // Create rarity section
+        const raritySection = document.createElement('div');
+        raritySection.className = 'skills-rarity-section';
+
+        // Create grid container for this rarity
+        const rarityGrid = document.createElement('div');
+        rarityGrid.className = 'skills-rarity-grid';
+
+        // Add skills for this rarity
+        ingredientList.forEach(ing => {
+            const ingContainer = document.createElement('div');
+            ingContainer.className = `skill-input-container ${rarity.toLowerCase()}`;
+
+            ingContainer.innerHTML = `
+            <label for="score-ing-${ing.name}" title="${ing.name}">${ing.name}</label>
+            <input type="number" id="score-ing-${ing.name}" data-prop-type="ingredient" data-prop-name="${ing.name}" value="${scoringConfig.ingredientScores[ing.name]}">
         `;
+
+            rarityGrid.appendChild(ingContainer);
+        });
+
+        raritySection.appendChild(rarityGrid);
+        ingredientInputsDiv.appendChild(raritySection);
     });
 
     const skillInputsDiv = document.getElementById('skill-score-inputs');
-    skills.forEach(skill => {
-        skillInputsDiv.innerHTML += `
-            <div>
-                <label for="score-skill-${skill.name.replace(/\s/g, '-')}" title="${skill.name}">${skill.name}:</label>
-                <input type="number" id="score-skill-${skill.name.replace(/\s/g, '-')}" data-prop-type="skill" data-prop-name="${skill.name}" value="${scoringConfig.skillScores[skill.name]}">
-            </div>
+    Object.entries(skillsByRarity).forEach(([rarity, skillList]) => {
+        if (skillList.length === 0) return;
+
+        // Create rarity section
+        const raritySection = document.createElement('div');
+        raritySection.className = 'skills-rarity-section';
+
+        // Create grid container for this rarity
+        const rarityGrid = document.createElement('div');
+        rarityGrid.className = 'skills-rarity-grid';
+
+        // Add skills for this rarity
+        skillList.forEach(skill => {
+            const skillContainer = document.createElement('div');
+            skillContainer.className = `skill-input-container ${rarity.toLowerCase()}`;
+
+            skillContainer.innerHTML = `
+            <label for="score-skill-${skill.name.replace(/\s/g, '-')}" title="${skill.name}">${skill.name}</label>
+            <input type="number" id="score-skill-${skill.name.replace(/\s/g, '-')}" data-prop-type="skill" data-prop-name="${skill.name}" value="${scoringConfig.skillScores[skill.name]}">
         `;
+
+            rarityGrid.appendChild(skillContainer);
+        });
+
+        raritySection.appendChild(rarityGrid);
+        skillInputsDiv.appendChild(raritySection);
     });
 
     const natureBoostInputsDiv = document.getElementById('nature-boost-score-inputs');
