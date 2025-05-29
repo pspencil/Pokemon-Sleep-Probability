@@ -78,6 +78,20 @@
                     <input type="number" id="min-score-c-input" min="0" value="100">
                     <input type="radio" name="compute-var" value="C"> Compute C
                 </div>
+
+                <div class="input-group">
+                    <label>Badge Status:</label>
+                    <div class="radio-group">
+                        <input type="radio" id="badge-none" name="badge-status" value="none" checked>
+                        <label for="badge-none">No badge</label>
+                        <input type="radio" id="badge-bronze" name="badge-status" value="bronze">
+                        <label for="badge-bronze">Bronze</label>
+                        <input type="radio" id="badge-silver" name="badge-status" value="silver">
+                        <label for="badge-silver">Silver</label>
+                        <input type="radio" id="badge-gold" name="badge-status" value="gold">
+                        <label for="badge-gold">Gold</label>
+                    </div>
+                </div>
             </div>
             <button id="calculate-btn">Calculate</button>
             <div class="calculation-result">

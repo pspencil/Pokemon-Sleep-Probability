@@ -219,3 +219,32 @@ footer {
         margin-bottom: 5px;
     }
 }
+
+/* Add or adjust styles for radio groups */
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    /* Allows wrapping on smaller screens */
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.radio-group input[type="radio"] {
+    margin-right: 5px;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    /* Inherit text color */
+}
+
+/* Optional: Add some visual feedback for selected radio buttons */
+.radio-group input[type="radio"]:checked+label {
+    font-weight: bold;
+    color: var(--primary-color);
+    /* Highlight selected label */
+}

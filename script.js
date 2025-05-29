@@ -178,6 +178,9 @@ const presets = {
 let memoizedScoreDistribution = []; // Stores objects like { score: number, probability: number }
 let currentMaxScore = 0; // The highest score encountered in the current configuration
 
+// Add a variable to store the selected badge status
+let selectedBadgeStatus = 'none'; // Default to no badge
+
 // --- 2. UI Elements and Event Listeners ---
 document.addEventListener('DOMContentLoaded', async () => {
     try {
@@ -395,6 +398,13 @@ function attachCalculatorListeners() {
     document.getElementById('save-current-preset-btn').addEventListener('click', saveCurrentPreset);
     document.getElementById('add-conditional-rule-btn').addEventListener('click', addConditionalRule);
     document.getElementById('calculate-btn').addEventListener('click', handleCalculate);
+
+    document.querySelectorAll('input[name="badge-status"]').forEach(radio => {
+        radio.addEventListener('change', async (event) => {
+            selectedBadgeStatus = event.target.value;
+            await precomputeScoreDistribution();
+        });
+    });
 }
 
 function attachGraphingListeners() {
@@ -602,6 +612,24 @@ function getOrCalculateSkillGroupings() {
     return memoizedSkillGroupings;
 }
 
+const isGoldSkill = (skillName) => {
+    const skill = skills.find(s => s.name === skillName);
+    return skill && skill.rarity === "Gold";
+};
+
+function isSkillGroupingValidForBadge(top3Skills) {
+    let guaranteedGoldSlots = 0;
+    if (selectedBadgeStatus === 'bronze') {
+        guaranteedGoldSlots = 1;
+    } else if (selectedBadgeStatus === 'silver') {
+        guaranteedGoldSlots = 2;
+    } else if (selectedBadgeStatus === 'gold') {
+        guaranteedGoldSlots = 3;
+    }
+
+    return top3Skills.slice(0, guaranteedGoldSlots).every(isGoldSkill);
+}
+
 /**
  * Precomputes the distribution of all possible Pokemon scores and their probabilities.
  * This function is computationally intensive and should be run only when the scoring configuration changes.
@@ -653,6 +681,10 @@ async function precomputeScoreDistribution() {
             // Skill scores (first 3 slots directly, then conditionals)
             const skillsInTop3 = skillGroup.top3Skills; // Get skills in the first 3 slots
 
+            if (!isSkillGroupingValidForBadge(skillsInTop3)) {
+                continue;
+            }
+
             const perSkillScore = new Map();
 
             skillsInTop3.forEach(skillName => {
@@ -693,6 +725,8 @@ async function precomputeScoreDistribution() {
             let probability = skillGroup.probability + (skillProbability.get(score) || 0);
             skillProbability.set(score, probability);
         }
+        const totalProb = Array.from(skillProbability.values()).reduce((acc, val) => acc + val, 0);
+        skillProbability.forEach((value, key) => skillProbability.set(key, value / totalProb));
 
 
         for (const [ing_score, ing_probability] of ingredientProbability) {
