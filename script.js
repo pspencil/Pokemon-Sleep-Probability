@@ -94,6 +94,27 @@ NATURE_EFFECT_CATEGORIES.forEach(cat => {
 
 // Example Presets (can be expanded)
 const presets = {
+    "Empty": {
+        ingredientScores: { "AAA": 0, "AAB": 0, "AAC": 0, "ABA": 0, "ABB": 0, "ABC": 0 },
+        skillScores: {
+            "Berry Finding S": 0, "Helping Bonus": 0, "Energy Recovery Bonus": 0,
+            "Helping Speed M": 0, "Ingredient Finder M": 0, "Skill Trigger M": 0,
+            "Helping Speed S": 0, "Ingredient Finder S": 0, "Skill Trigger S": 0,
+            "Skill Level Up S": 0, "Skill Level Up M": 0,
+            "Inventory Up S": 0, "Inventory Up M": 0, "Inventory Up L": 0,
+            "Dream Shard Bonus": 0, "Research EXP Bonus": 0, "Sleep EXP Bonus": 0
+        },
+        natureBoostScores: {
+            "Speed of Help": 0, "Energy Recovery": 0, "Ingredient Finding": 0,
+            "Main Skill Chance": 0, "EXP Gains": 0
+        },
+        natureReductionScores: {
+            "Speed of Help": 0, "Energy Recovery": 0, "Ingredient Finding": 0,
+            "Main Skill Chance": 0, "EXP Gains": 0
+        },
+        conditionalSkillScores: [],
+        sameSkillGroups: []
+    },
     "Berry": {
         ingredientScores: { "AAA": 0, "AAB": 0, "AAC": 0, "ABA": 0, "ABB": 0, "ABC": 0 },
         skillScores: {
