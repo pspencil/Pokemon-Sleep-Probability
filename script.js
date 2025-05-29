@@ -391,11 +391,10 @@ function attachTabListeners() {
 }
 
 function attachCalculatorListeners() {
-    document.getElementById('load-preset-btn').addEventListener('click', () => {
-        const selectedPreset = document.getElementById('preset-select').value;
+    document.getElementById('preset-select').addEventListener('change', (event) => {
+        const selectedPreset = event.target.value;
         loadPreset(selectedPreset);
     });
-    document.getElementById('save-current-preset-btn').addEventListener('click', saveCurrentPreset);
     document.getElementById('add-conditional-rule-btn').addEventListener('click', addConditionalRule);
     document.getElementById('calculate-btn').addEventListener('click', handleCalculate);
 
